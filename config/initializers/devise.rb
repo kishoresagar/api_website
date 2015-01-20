@@ -258,4 +258,5 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
     config.omniauth :twitter, "xtGKOkwenMHYl5c7uc8ZgyFgW", "ravVpDy4mNaP6kSHHCD5Ky7aKoezZ3zczh0UM8TAJuZFhcWjXU"
+    config.omniauth :github, '1960c9297914a720bb88', 'e3a5cdd6e393b5aff09083e09dfdbf2741e53e74', :scope => 'user,public_repo'
 end

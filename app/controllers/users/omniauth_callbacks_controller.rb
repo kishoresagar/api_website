@@ -14,6 +14,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
    end
 
+   def github
+    user = User.find_for_oauth(request.env["omniauth.auth"])
+
+    if user.persisted?
+      flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Github"
+      sign_in_and_redirect user, :event => :authentication
+    else
+      session["devise.user_attributes"] = user.attributes
+      redirect_to new_user_registration_url
+    end
+  end
+
   # More info at:
   # https://github.com/plataformatec/devise#omniauth
 
