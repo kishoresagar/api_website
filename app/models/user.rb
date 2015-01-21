@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
-
+  has_many :tweets 
+  has_many :git_apis
 
     def self.from_omniauth(auth)
       where(auth.slice(:provider, :uid)).first_or_create do |user|
@@ -43,21 +44,17 @@ class User < ActiveRecord::Base
       super && provider.blank?
     end
 
-    after_create do |obj|
-    consumer = OAuth::Consumer.new(AppConfig['twitter']['consumer_key'], AppConfig['twitter']['consumer_secret'], :site => "https://twitter.com/")
-    @request_token = consumer.get_request_token
-    token = @request_token.authorize_url
-    obj.tw_token = token.split('=')[1]
-    obj.save
-    Tweet.add_tweets(obj)
-
-  end
-
   after_create do |obj|
-     github = Github.new :client_id => "1960c9297914a720bb88", :client_secret => "e3a5cdd6e393b5aff09083e09dfdbf2741e53e74"
-     github.authorize_url redirect_uri: 'http://localhost', scope: 'repo'
-     token = github.get_token( authorization_code )
-     obj.git_token = token.token
-     obj.save
-  end  
+    if obj.provider == 'twitter'
+      consumer = OAuth::Consumer.new(AppConfig['twitter']['consumer_key'], AppConfig['twitter']['consumer_secret'], :site => "https://twitter.com/")
+      @request_token = consumer.get_request_token
+      token = @request_token.authorize_url
+      debugger
+      obj.tw_token = token.split('=')[1]
+      obj.save
+      Tweet.add_tweets(obj)
+    elsif obj.provider == 'github'
+      GitApi.add_repo_lists(obj)
+    end
+  end
 end
