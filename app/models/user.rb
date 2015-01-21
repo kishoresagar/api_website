@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
       where(auth.slice(:provider, :uid)).first_or_create do |user|
         user.provider = auth.provider
         user.uid = auth.uid
+        user.email = auth.info.email
         user.username = auth.info.nickname
         user.password = Devise.friendly_token[0,20]
       end
@@ -49,7 +50,6 @@ class User < ActiveRecord::Base
       consumer = OAuth::Consumer.new(AppConfig['twitter']['consumer_key'], AppConfig['twitter']['consumer_secret'], :site => "https://twitter.com/")
       @request_token = consumer.get_request_token
       token = @request_token.authorize_url
-      debugger
       obj.tw_token = token.split('=')[1]
       obj.save
       Tweet.add_tweets(obj)

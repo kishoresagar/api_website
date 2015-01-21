@@ -1,7 +1,7 @@
 class GithubController < ApplicationController
 
 	def index
-		@gits = 	GitApi.all
+		@gits = 	current_user.git_apis
 	end
 
 end

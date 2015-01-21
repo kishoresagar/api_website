@@ -1,18 +1,26 @@
 Rails.application.routes.draw do
   
-  get 'tweets/new'
-
+  
   get 'home/index'
+  resources :tweets
+  resources :home
+  resources :github
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
 
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } 
+
+  
+  resources :users do
+    resources :tweets
+    resources :github
+  end
 
   # You can have the root of your site routed with "root"
-  root to: "tweets#index"
+  root to: "home#index"
 
 
 
