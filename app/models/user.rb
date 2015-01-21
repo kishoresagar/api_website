@@ -42,5 +42,22 @@ class User < ActiveRecord::Base
     def password_required?
       super && provider.blank?
     end
-    
+
+    after_create do |obj|
+    consumer = OAuth::Consumer.new(AppConfig['twitter']['consumer_key'], AppConfig['twitter']['consumer_secret'], :site => "https://twitter.com/")
+    @request_token = consumer.get_request_token
+    token = @request_token.authorize_url
+    obj.tw_token = token.split('=')[1]
+    obj.save
+    Tweet.add_tweets(obj)
+
+  end
+
+  after_create do |obj|
+     github = Github.new :client_id => "1960c9297914a720bb88", :client_secret => "e3a5cdd6e393b5aff09083e09dfdbf2741e53e74"
+     github.authorize_url redirect_uri: 'http://localhost', scope: 'repo'
+     token = github.get_token( authorization_code )
+     obj.git_token = token.token
+     obj.save
+  end  
 end

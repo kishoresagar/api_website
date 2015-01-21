@@ -11,14 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150120030020) do
+ActiveRecord::Schema.define(version: 20150121023705) do
 
   create_table "tweets", force: true do |t|
-    t.string   "from_user"
-    t.string   "from_user_id_str"
-    t.string   "profile_image_url"
+    t.string   "username"
     t.string   "text"
-    t.datetime "twitter_created_at"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -39,6 +37,8 @@ ActiveRecord::Schema.define(version: 20150120030020) do
     t.string   "provider"
     t.string   "uid"
     t.string   "username"
+    t.string   "tw_token"
+    t.string   "git_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
