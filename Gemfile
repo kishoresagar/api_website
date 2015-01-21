@@ -13,6 +13,11 @@ gem 'omniauth-twitter'
 gem 'omniauth-github'
 gem "github_api"
 gem "rest-client"
+gem "prawn"
+gem "prawn_rails"
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
