@@ -102,7 +102,6 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.17)
     naught (1.0.0)
     netrc (0.10.2)
     nokogiri (1.6.5)
@@ -133,6 +132,7 @@ GEM
       omniauth-oauth (~> 1.0)
     orm_adapter (0.5.0)
     pdf-core (0.4.0)
+    pg (0.18.1)
     polyglot (0.3.5)
     prawn (1.3.0)
       pdf-core (~> 0.4.0)
@@ -240,10 +240,10 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
-  mysql2
   omniauth
   omniauth-github
   omniauth-twitter
+  pg
   prawn
   prawn_rails
   protected_attributes
