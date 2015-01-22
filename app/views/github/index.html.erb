@@ -1,17 +1,21 @@
-<div class="container">
-  <div class="row">
-   <div class="span9 centred">
-		<table class="table table-striped">
-			<tr>
-			  <th>Github Repository</th>
-			</tr>
-		    <% @gits.each do |f| %>
-			<tr>
-			  <td><%= f.name %></td>
-			</tr>
-		<% end %>
-		</table>
-    </div>
-    <p><%= link_to "Printable Invoice (PDF)", user_github_index_path(@gits, :format => 'pdf') %></p>
-   </div>
-</div>
+<% if @gits.present? %>
+	<div class="container">
+	  <div class="row">
+	   <div class="span9 centred">
+			<table class="table table-striped">
+				<tr>
+				  <th>Github Repository</th>
+				</tr>
+			    <% @gits.each do |f| %>
+				<tr>
+				  <td><%= f.name %></td>
+				</tr>
+			<% end %>
+			</table>
+	    </div>
+	    <p><%= link_to "Printable Invoice (PDF)", user_github_index_path(@gits, :format => 'pdf') %></p>
+	   </div>
+	</div>
+<% else %>
+		<h3> No Repository Found </h3>
+<% end %>
